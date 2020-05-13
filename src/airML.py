@@ -1,5 +1,6 @@
 import os
 
+DEFAULT_KNS = ""
 JAR_EXECUTE = "java -jar kbox-v0.0.2-alpha.jar"  # kbox-v0.0.2-alpha.jar
 SPACE = " "
 
@@ -21,53 +22,43 @@ def list(kns=False):
         raise OSError(e)
 
 
-def install(modelUrl):
+def install(modelID, format=None, version=None):
     """
-    Install a given model by given URL.
-    :param modelUrl: the url of the model to be installed :type string
-    :return None
-    :throws OSError
+
+    :param modelID:
+    :param format:
+    :param version:
     """
     try:
-        execute = JAR_EXECUTE + SPACE + "-install" + SPACE + modelUrl
+        execute = JAR_EXECUTE + SPACE + "-install" + SPACE + "-kb" + SPACE + modelID
+        if format is not None:
+            execute += (SPACE + "-format" + SPACE + format)
+        elif format is not None:
+            execute += (SPACE + "-format" + SPACE + format)
+            if version is not None:
+                execute += (SPACE + "-version" + SPACE + version)
+        execute += (SPACE + "-kns" + SPACE + DEFAULT_KNS)
         os.system(execute)
     except OSError as e:
         raise OSError(e)
 
 
-def installKNS(kns):
-    """
-    Install a given KNS service.
-    :param kns: url of the kns service :type string
-    :return None
-    :throws OSError
-    """
-    try:
-        execute = JAR_EXECUTE + SPACE + "-kns" + SPACE + kns
-        os.system(execute)
-    except OSError as e:
-        raise OSError(e)
-
-
-def install(model, format=None, version=None, index=None, kns=None):
+def install(modelID, format=None, version=None, kns=None):
     """
     Install a given model base using the available KNS services to resolve it.
-    :param model: url of the model to be installed :type string
+    :param modelID: url of the model to be installed :type string
     :param format: format of the model :type string
     :param version: version of the model :type string
-    :param index: index of the model :type string
     :param kns: url of the kns service :type string
     :return None
     :throws OSError
     """
-    execute = JAR_EXECUTE + SPACE + "-install" + SPACE + "-kb" + SPACE + model
+    execute = JAR_EXECUTE + SPACE + "-install" + SPACE + "-kb" + SPACE + modelID
     try:
         if kns is not None:
             execute += (SPACE + "-kns" + SPACE + kns)
             if format is not None:
                 execute += (SPACE + "-format" + SPACE + format)
-        elif index is not None:
-            execute += (SPACE + "-index" + SPACE + index)
         elif format is not None:
             execute += (SPACE + "-format" + SPACE + format)
             if version is not None:
@@ -75,6 +66,11 @@ def install(model, format=None, version=None, index=None, kns=None):
         os.system(execute)
     except OSError as e:
         raise OSError(e)
+
+
+def insatall(modelID, format, version, model):
+    # TODO: Have to implement the function
+    return
 
 
 def removeKNS(kns):
