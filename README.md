@@ -30,13 +30,30 @@ pip install airML
     :return None
     :throws OSError
 
-##### * iinstall(model, format=None, version=None, index=None, kns=None)
-     Install a given model base using the available KNS services to resolve it.
+##### * install(modelID, format=None, version=None, kns=None)
+     Install a given model base using the given KNS services to resolve it.
     :param model: url of the model to be installed :type string
     :param format: format of the model :type string
     :param version: version of the model :type string
-    :param index: index of the model :type string
     :param kns: url of the kns service :type string
+    :return None
+    :throws OSError
+
+##### * install(modelID, format=None, version=None)
+    Install a given model using the available KNS services to resolve it.
+    :param model: url of the model to be installed :type string
+    :param format: format of the model :type string
+    :param version: version of the model :type string
+    :param kns: url of the kns service :type string
+    :return None
+    :throws OSError
+
+##### * install(modelID, format=None, version=None, model=None)
+     Install a given model base using the given KNS services to resolve it.
+    :param model: url of the model to be installed :type string
+    :param format: format of the model :type string
+    :param version: version of the model :type string
+    :param mode: the trained model path :type string
     :return None
     :throws OSError
 
