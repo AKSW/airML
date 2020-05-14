@@ -1,112 +1,201 @@
-import sys
 import os
-    
-JAR_EXECUTE = "java -jar kbox.jar" # kbox-v0.0.2-alpha.jar
+
+DEFAULT_KNS = ""
+JAR_EXECUTE = "java -jar kbox-v0.0.2-alpha.jar"  # kbox-v0.0.2-alpha.jar
 SPACE = " "
 
-#Create an index with the files in a given directory.
-def createIndex(dir):
-    execute = JAR_EXECUTE + SPACE + "-createIndex" + SPACE + dir
-    os.system(execute)
+
+def list(kns=False):
+    """
+    List all available models(kns=False) or list all KNS services(kns=True).
+    :param kns: Define whether to list only the KNS services or not  :type boolean
+    :return None
+    :throws OSError
+    """
+    try:
+        if kns:
+            execute = JAR_EXECUTE + SPACE + "-list" + SPACE + "-kns"
+        else:
+            execute = JAR_EXECUTE + SPACE + "-list"
+            os.system(execute)
+    except OSError as e:
+        raise OSError(e)
+
+
+def install(modelID, format=None, version=None):
+    """
+
+    :param modelID:
+    :param format:
+    :param version:
+    """
+    try:
+        execute = JAR_EXECUTE + SPACE + "-install" + SPACE + "-kb" + SPACE + modelID
+        if format is not None:
+            execute += (SPACE + "-format" + SPACE + format)
+        elif format is not None:
+            execute += (SPACE + "-format" + SPACE + format)
+            if version is not None:
+                execute += (SPACE + "-version" + SPACE + version)
+        execute += (SPACE + "-kns" + SPACE + DEFAULT_KNS)
+        os.system(execute)
+    except OSError as e:
+        raise OSError(e)
+
+
+def install(modelID, format=None, version=None, kns=None):
+    """
+    Install a given model base using the available KNS services to resolve it.
+    :param modelID: url of the model to be installed :type string
+    :param format: format of the model :type string
+    :param version: version of the model :type string
+    :param kns: url of the kns service :type string
+    :return None
+    :throws OSError
+    """
+    execute = JAR_EXECUTE + SPACE + "-install" + SPACE + "-kb" + SPACE + modelID
+    try:
+        if kns is not None:
+            execute += (SPACE + "-kns" + SPACE + kns)
+            if format is not None:
+                execute += (SPACE + "-format" + SPACE + format)
+        elif format is not None:
+            execute += (SPACE + "-format" + SPACE + format)
+            if version is not None:
+                execute += (SPACE + "-version" + SPACE + version)
+        os.system(execute)
+    except OSError as e:
+        raise OSError(e)
+
+
+def insatall(modelID, format, version, model):
+    # TODO: Have to implement the function
     return
 
 
-# Serialize the content of a directory to be served in a KNS system.
-def serialize(dir):
-    execute = JAR_EXECUTE + SPACE + "-serialize" + SPACE + dir 
-    os.system(execute)
-    return
-
-def sparql(query):
-    return
-
-# Start an SPARQL enpoint in the given subDomain containing the given KB.
-def server(port="8080",subDomain="kbox",kb):
-    execute = JAR_EXECUTE + SPACE + "-server" + SPACE + "-port" + SPACE + port + SPACE + "-subdomain" + SPACE + subDomain + SPACE + "-kb" + SPACE + kb + SPACE +"-install"
-    return os.system(execute)
-
-# List all available knowledge base.
-# List all availables KNS services.
-def showList(kns=False):
-    if kns:
-        execute = JAR_EXECUTE + SPACE + "-list" + SPACE + "-kns"  + SPACE + kns
-    else:
-        execute = JAR_EXECUTE + SPACE + "-list"
-    return os.system(execute)
-
-# Install a given resource.
-def installByUrl(url):
-    execute = JAR_EXECUTE + SPACE + "-install" + SPACE + url
-    os.system(execute)
-
-# Install a given KNS service.
-def installKNS(kns):
-    execute = JAR_EXECUTE + SPACE + "-kns" + SPACE + kns
-    os.system(execute)
-
-# Install a given knowledge base using the available KNS services to resolve it.
-def installKB(kb,format=None,version=None,index=None,kns=None):
-    execute = JAR_EXECUTE + SPACE + "-install" + SPACE + "-kb" + SPACE + kb
-    if kns!=None:
-        execute+=(SPACE + "-kns" + SPACE + kns)
-        if format!=None:
-            execute+=(SPACE + "-format" + SPACE + format)
-    elif index!=None:
-        execute +=(SPACE + "-index" + SPACE + index)
-    elif format!=None:
-        execute+=(SPACE + "-format" + SPACE + format)
-        if version!=None:
-            execute+=(SPACE + "-version" + SPACE + version)
-    os.system(execute)
-
-# Remove a given KNS service.
 def removeKNS(kns):
+    """
+    Remove a given KNS service.
+    :param kns: url of the kns service :type string
+    :return None
+    :throws OSError
+    """
     execute = JAR_EXECUTE + SPACE + "-remove" + SPACE + "-kns" + SPACE + kns
-    os.system(execute)
+    try:
+        os.system(execute)
+    except OSError as e:
+        raise OSError(e)
 
-# Gives the information about a specific KB.
-def getInfo(url,format=None,version=None):
-    execute = JAR_EXECUTE + SPACE + "-info" + SPACE + url
-    if format!=None:
-        execute+=(SPACE + "-format" + SPACE + format)
-        if version!=None:
-            execute+=(SPACE + "-version" + SPACE + version)
-    return os.system(execute)
 
-# returns the local address of the given resource.
-def locateResource(url):
-    execute = JAR_EXECUTE + SPACE + "-locate" + SPACE + url
-    return os.system(execute)
+def getInfo(model, format=None, version=None):
+    """
+    Gives the information about a specific model.
+    :param model: url of the model to be installed :type string
+    :param format: format of the model :type string
+    :param version: version of the model :type string
+    :return None
+    :throws OSError
+    """
+    execute = JAR_EXECUTE + SPACE + "-info" + SPACE + model
+    try:
+        if format is not None:
+            execute += (SPACE + "-format" + SPACE + format)
+            if version is not None:
+                execute += (SPACE + "-version" + SPACE + version)
+        return os.system(execute)
+    except OSError as e:
+        raise OSError(e)
 
-# returns the local address of the given KB.
-def locateKB(url,format=None,version=None):
-    execute = JAR_EXECUTE + SPACE + "-locate" + SPACE + + "-kb" + SPACE + url
-    if format!=None:
-        execute+=(SPACE + "-format" + SPACE + format)
-        if version!=None:
-            execute+=(SPACE + "-version" + SPACE + version)
-    return os.system(execute)
 
-# Search for all kb-URL containing a given pattern.
-def search(pattern,format=None,version=None):
-    execute = JAR_EXECUTE + SPACE + "-search" + SPACE + pattern
-    if format!=None:
-        execute+=(SPACE + "-format" + SPACE + format)
-        if version!=None:
-            execute+=(SPACE + "-version" + SPACE + version)
-    os.system(execute)
+def locate(model):
+    """
+    returns the local address of the given model.
+    :param model: url of the model to be installed :type string
+    :return None
+    :throws OSError
+    """
+    try:
+        execute = JAR_EXECUTE + SPACE + "-locate" + SPACE + model
+        return os.system(execute)
+    except OSError as e:
+        raise OSError(e)
 
-# Show the path to the resource folder.
-def getResourceDirPath():
-    execute = JAR_EXECUTE + SPACE + "-r-dir"
-    os.system(execute)
 
-# Change the path of the resource folder.
-def changeResourceDirPath(dir):
-    execute = JAR_EXECUTE + SPACE + "-r-dir" + SPACE + dir
-    os.system(execute)
+def locate(model, format=None, version=None):
+    """
+    returns the local address of the given KB.
+    :param model: url of the model to be installed :type string
+    :param format: format of the model :type string
+    :param version: version of the model :type string
+    :return None
+    :throws OSError
+    """
+    try:
+        execute = JAR_EXECUTE + SPACE + "-locate" + SPACE + + "-kb" + SPACE + model
+        if format is not None:
+            execute += (SPACE + "-format" + SPACE + format)
+            if version is not None:
+                execute += (SPACE + "-version" + SPACE + version)
+        return os.system(execute)
+    except OSError as e:
+        raise OSError(e)
 
-# display KBox version.
+
+def search(pattern, format=None, version=None):
+    """
+    Search for all model-ids containing a given pattern.
+    :param pattern: pattern of the url of the models
+    :param format: format of the model :type string
+    :param version: version of the model :type string
+    :return None
+    :throws OSError
+    """
+    try:
+        execute = JAR_EXECUTE + SPACE + "-search" + SPACE + pattern
+        if format is not None:
+            execute += (SPACE + "-format" + SPACE + format)
+            if version is not None:
+                execute += (SPACE + "-version" + SPACE + version)
+        os.system(execute)
+    except OSError as e:
+        raise OSError(e)
+
+
+def getModelDirPath():
+    """
+    Show the path to the folder which contains the models.
+    :return None
+    :throws OSError
+    """
+    try:
+        execute = JAR_EXECUTE + SPACE + "-r-dir"
+        os.system(execute)
+    except OSError as e:
+        raise OSError(e)
+
+
+def setModelDirPath(dir):
+    """
+    Change the path of the resource folder.
+    :param dir: new model path
+    :return None
+    :throws OSError
+    """
+    try:
+        execute = JAR_EXECUTE + SPACE + "-r-dir" + SPACE + dir
+        os.system(execute)
+    except OSError as e:
+        raise OSError(e)
+
+
 def showVersion():
-    execute = JAR_EXECUTE + SPACE + "-version"
-    return os.system(execute)
+    """
+    display KBox version.
+    :return None
+    :throws OSError
+    """
+    try:
+        execute = JAR_EXECUTE + SPACE + "-version"
+        os.system(execute)
+    except OSError as e:
+        raise OSError(e)
