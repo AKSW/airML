@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 DEFAULT_KNS = ""
 JAR_EXECUTE = "java -jar kbox-v0.0.2-alpha.jar"  # kbox-v0.0.2-alpha.jar
@@ -115,8 +116,9 @@ def locate(model):
     :throws OSError
     """
     try:
-        execute = JAR_EXECUTE + SPACE + "-locate" + SPACE + model
-        return os.system(execute)
+        execute = ["java", "-jar", "kbox-v0.0.2-alpha.jar", "-locate", "-kb", model]
+        path = subprocess.run(execute, capture_output=True).stdout.decode()
+        return path.split("\n")[0]
     except OSError as e:
         raise OSError(e)
 
@@ -131,12 +133,16 @@ def locate(model, format=None, version=None):
     :throws OSError
     """
     try:
-        execute = JAR_EXECUTE + SPACE + "-locate" + SPACE + + "-kb" + SPACE + model
+        execute = ["java", "-jar", "kbox-v0.0.2-alpha.jar","-locate","-kb",model]
         if format is not None:
-            execute += (SPACE + "-format" + SPACE + format)
+            execute.append("-format")
+            execute.append(format)
             if version is not None:
-                execute += (SPACE + "-version" + SPACE + version)
-        return os.system(execute)
+                execute.append("-version")
+                execute.append(version)
+        # return subprocess.check_output(execute).decode("utf-8")
+        path = subprocess.run(execute, capture_output=True).stdout.decode()
+        return path.split("\n")[0]
     except OSError as e:
         raise OSError(e)
 
