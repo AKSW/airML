@@ -234,7 +234,7 @@ def showVersion():
 
 
 # if __name__ == '__main__':
-#     # install("http://github.org/aksw/NSpM/monument_300", "NSPM/Model", "0")
-#     # print(getModelDirPath())
+#     install("http://github.org/aksw/NSpM/monument_300", "NSPM/Model", "0")
+#     print(getModelDirPath())
 #     print(showVersion())
 
