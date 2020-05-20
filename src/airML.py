@@ -216,13 +216,17 @@ def showVersion():
         raise OSError(e)
 
 
-if __name__ == '__main__':
-    # install("http://github.org/aksw/NSpM/monument_300", "NSPM/Model", "0")
-    print(getModelDirPath())  #"/home/oshara/.kbox"
+# if __name__ == '__main__':
+#     # install("http://github.org/aksw/NSpM/monument_300", "NSPM/Model", "0")
+#      #"/home/oshara/.kbox"
+#
+#     # print(showVersion())
+#
+#     # print(locate("http://github.org/aksw/NSpM/monument_300", "NSPM/Model", "0"))
+#     # getInfo("http://github.org/aksw/NSpM/monument_300", "NSPM/Model", "0")
+#     # print(search("NSPM/Model",version="0"))
+#
+#     # setModelDirPath("/home/test/kbox/test/models")
+#     # print(getModelDirPath())
 
-    # print(showVersion())
-
-    # print(locate("http://github.org/aksw/NSpM/monument_300", "NSPM/Model", "0"))
-    # getInfo("http://github.org/aksw/NSpM/monument_300", "NSPM/Model", "0")
-    # print(search("NSPM/Model",version="0"))
 
