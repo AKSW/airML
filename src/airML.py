@@ -103,7 +103,7 @@ def removeKNS(kns):
 def getInfo(model, format=None, version=None):
     """ Gives the information about a specific model.
     Args:
-        model: url of the model to be installed.
+        model: url of the model.
         format: format of the model.
         version: version of the model.
     Return:
@@ -117,32 +117,15 @@ def getInfo(model, format=None, version=None):
             execute += (SPACE + "-format" + SPACE + format)
             if version is not None:
                 execute += (SPACE + "-version" + SPACE + version)
-        return os.system(execute)
+        os.system(execute)
     except OSError as e:
         raise OSError(e)
 
 
-def locate(model):
-    """ Find the local address of the given model.
-    Args:
-        model: 'string', url of the model to be located.
-    Returns:
-         None
-    Throws:
-        OSError
-    """
-    try:
-        execute = ["java", "-jar", "kbox-v0.0.2-alpha.jar", "-locate", "-kb", model]
-        path = subprocess.run(execute, capture_output=True).stdout.decode()
-        return path.split("\n")[0]
-    except OSError as e:
-        raise OSError(e)
-
-
-def locate(model, format=None, version=None):
+def locate(modelID, format=None, version=None):
     """ Returns the local address of the given model.
     Args:
-        model: 'string',url of the model to be installed.
+        modelID: 'string',url of the model to be located.
         format: 'string',format of the model.
         version: 'string',version of the model.
     Returns:
@@ -151,7 +134,7 @@ def locate(model, format=None, version=None):
         OSError
     """
     try:
-        execute = ["java", "-jar", "kbox-v0.0.2-alpha.jar", "-locate", "-kb", model]
+        execute = ["java", "-jar", "kbox-v0.0.2-alpha.jar", "-locate", "-kb", modelID]
         if format is not None:
             execute.append("-format")
             execute.append(format)
@@ -233,8 +216,13 @@ def showVersion():
         raise OSError(e)
 
 
-# if __name__ == '__main__':
-#     install("http://github.org/aksw/NSpM/monument_300", "NSPM/Model", "0")
-#     print(getModelDirPath())
-#     print(showVersion())
+if __name__ == '__main__':
+    # install("http://github.org/aksw/NSpM/monument_300", "NSPM/Model", "0")
+    print(getModelDirPath())  #"/home/oshara/.kbox"
+
+    # print(showVersion())
+
+    # print(locate("http://github.org/aksw/NSpM/monument_300", "NSPM/Model", "0"))
+    # getInfo("http://github.org/aksw/NSpM/monument_300", "NSPM/Model", "0")
+    # print(search("NSPM/Model",version="0"))
 
