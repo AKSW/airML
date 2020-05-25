@@ -64,10 +64,12 @@ pip install airML
     Throws:
         OSError
    
-##### locate(model)
+##### locate(modelID, format=None, version=None)
     Description:Find the local address of the given model.
     Args:
-        model: 'string', url of the model to be located.
+        modelID: 'string', url of the model to be located.
+        format: 'string', format of the model.
+        version: 'string', version of the model
     Returns:
          None
     Throws:
