@@ -92,7 +92,7 @@ pip install airML
         Path of the installed models.
     Throws:
         OSError
-    """
+
 ##### setModelDirPath(dir)
     Description:Change the path of the resource folder.
     Args:
@@ -101,7 +101,7 @@ pip install airML
         None
     Throws:
         OSError
-    """
+ 
 ##### showVersion()
     Description:Returns KBox version.
     Returns:
@@ -109,8 +109,11 @@ pip install airML
     Throws:
         OSError
  
-
-
+#### Running Tests
+* By executing the below command you can run the tests.
+    ```
+    python -m unittest test_airML.py
+    ```
 #### Source URLs
 * See the source for this project [here] (https://github.com/AKSW/airML)
 * Find the KBox source code [here] (https://github.com/AKSW/KBox)
