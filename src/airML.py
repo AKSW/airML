@@ -1,8 +1,10 @@
 import subprocess
 import json
+import os
 
 DEFAULT_KNS = ""
-JAR_EXECUTE = "java -jar kbox-v0.0.2-beta.jar"  # kbox-v0.0.2-beta.jar
+DIR_PATH = os.path.dirname(os.path.realpath(__file__))
+JAR_EXECUTE = "java -jar " + DIR_PATH + "/kbox-v0.0.2-beta.jar"  # kbox-v0.0.2-beta.jar
 SPACE = " "
 JSON_OUTPUT = " -o json"
 
@@ -198,7 +200,7 @@ def showVersion():
 
 def __execute_command(execute):
     try:
-        process = subprocess.Popen(execute.split(), shell=True, stdout=subprocess.PIPE)
+        process = subprocess.Popen(execute.split(), stdout=subprocess.PIPE)
         output, err = process.communicate()
         output = output.decode("utf-8")
         json_output = json.loads(output)
