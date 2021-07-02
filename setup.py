@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="airML",
-    version="0.0.1-alpha",
+    version="0.0.2",
     author="Lahiru Oshara Hinguruduwa",
     author_email='oshara.16@cse.mrt.ac.lk',
     url='https://github.com/AKSW/airML',
@@ -16,6 +16,7 @@ setup(
     py_modules=['airML'],
     packages=[""],
     package_dir={'': 'src'},
+    package_data={'': ['*.jar']},
     include_package_data=True,
     license='Apache',
     classifiers=[
