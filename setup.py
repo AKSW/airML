@@ -14,10 +14,15 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     py_modules=['airML'],
-    packages=[""],
-    package_dir={'': 'src'},
+    packages=["airML"],
+    # package_dir={'': 'airML'},
     package_data={'': ['*.jar']},
     include_package_data=True,
+    install_requires=['click>=7.1.2'],
+    entry_points='''
+        [console_scripts]
+        airML=airML.airML:execute_kbox_command
+    ''',
     license='Apache',
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
