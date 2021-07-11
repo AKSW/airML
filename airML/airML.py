@@ -39,7 +39,25 @@ def execute_kbox_command(commands):
 
 def execute(commands):
     commands = tuple(commands.split())
-    execute_kbox_command(commands)
+    if not __is_push(commands):
+        args = SPACE
+        for item in commands:
+            args += item + SPACE
+        execute_commands = JAR_EXECUTE + args
+        try:
+            process = subprocess.Popen(execute_commands.split(), stdout=subprocess.PIPE)
+            output, err = process.communicate()
+            output = output.decode("utf-8")
+            return output
+        except OSError as e:
+            print(e)
+    else:
+        file_path = commands[1]
+        print(file_path)
+        url = 'https://store9.gofile.io/uploadFile'
+        files = {'file': open(file_path, 'rb')}
+        r = requests.post(url, files=files)
+        return r.text
 
 
 def __is_push(command):
