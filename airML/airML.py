@@ -20,9 +20,9 @@ def execute_kbox_command(commands):
         args = SPACE
         for item in commands:
             args += item + SPACE
-        execute = JAR_EXECUTE + args
+        execute_commands = JAR_EXECUTE + args
         try:
-            process = subprocess.Popen(execute.split(), stdout=subprocess.PIPE)
+            process = subprocess.Popen(execute_commands.split(), stdout=subprocess.PIPE)
             output, err = process.communicate()
             output = output.decode("utf-8")
             click.echo(output)
@@ -35,6 +35,11 @@ def execute_kbox_command(commands):
         files = {'file': open(file_path, 'rb')}
         r = requests.post(url, files=files)
         print(r.text)
+
+
+def execute(commands):
+    commands = tuple(commands.split())
+    execute_kbox_command(commands)
 
 
 def __is_push(command):
