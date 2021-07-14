@@ -15,9 +15,11 @@ up a python environment to use the airML package.
 
 Open a terminal and execute KBox commands in python with airML package as below,
 
-#### airML list -o json
+````
+airML list -o json
+````
 **Note: Here the `-o json` is an optional parameter. If you want to get the output as a json message, you should use this. 
-Otherwise use the command without `-o json`.
+Otherwise, use the command without `-o json`.
 
 ````
 {
