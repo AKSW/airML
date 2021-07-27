@@ -7,6 +7,7 @@ import click
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 JAR_EXECUTE = "java -jar " + DIR_PATH + "/kbox-v0.0.2-beta.jar"  # kbox-v0.0.2-beta.jar
 SPACE = " "
+JSON_OUTPUT = " -o json"
 
 PUSH_COMMAND = 'push'
 
@@ -58,6 +59,66 @@ def execute(commands):
         files = {'file': open(file_path, 'rb')}
         r = requests.post(url, files=files)
         return r.text
+
+
+
+def list(kns=False):
+    """ List all available models(kns=False) or list all KNS services(kns=True).
+        Args:
+          kns:'boolean',defines whether to list only the KNS services or not
+        Returns:
+            Results from the kbox as JSON String
+    """
+    if kns:
+        return execute('list kns' + JSON_OUTPUT)
+    else:
+        return execute('list' + JSON_OUTPUT)
+
+
+def install(modelID, format=None, version=None):
+    """ Install the a model by given modelID
+        Args:
+            modelID: 'string', url of the model hosted in a public repository.
+            format:  'string', format of the model.
+            version: 'string' specific version to be installed of the the model.
+        Returns:
+            Results from the kbox as JSON String
+        Example:
+            install("http://nspm.org/art","NSPM","0")
+        """
+    command = 'install ' + modelID
+    if format is not None:
+        command += SPACE + '-format' + SPACE + format
+    if version is not None:
+        command += SPACE + '-version' + SPACE + version
+    return execute(command + JSON_OUTPUT)
+
+
+def getInfo(model):
+    """ Gives the information about a specific model.
+    Args:
+        model: url of the model.
+    Return:
+        Results from the kbox as JSON String
+    """
+    command = "info" + SPACE + model
+    return execute(command + JSON_OUTPUT)
+
+
+
+def locate(modelID, format, version=None):
+    """ Returns the local address of the given model.
+    Args:
+        modelID: 'string',url of the model to be located.
+        format: 'string',format of the model.
+        version: 'string',version of the model.
+    Returns:
+        Results from the kbox as JSON String
+    """
+    command = 'locate' + SPACE + modelID + SPACE + '-format' + SPACE + format
+    if version is not None:
+        command += SPACE + '-version' + version
+    return execute(command + JSON_OUTPUT)
 
 
 def __is_push(command):
