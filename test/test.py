@@ -44,6 +44,21 @@ class TestAirML(unittest.TestCase):
         output = airML.execute('lists')
         self.assertTrue("KBox.jar <command> [option]" in output)
 
+    def test_list_function(self):
+        output = airML.list(False)
+        self.assertTrue('"status_code": 200,' in output)
+
+    def test_install_function(self):
+        output = airML.install('http://nspm.org/art', format="nspm")
+        self.assertTrue('"message": "http://nspm.org/art KB installed.",' in output)
+
+    def test_getInfo_function(self):
+        output = airML.getInfo('http://nspm.org/art')
+        self.assertTrue('"Publisher:": "KBox team"' in output)
+
+    def test_locate_function(self):
+        output = airML.locate('http://nspm.org/art', format='nspm')
+        self.assertTrue('"status_code": 200,' in output)
 
 if __name__ == '__main__':
     unittest.main()
