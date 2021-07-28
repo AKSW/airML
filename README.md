@@ -63,10 +63,58 @@ If you want to use the airML inside your python application, you can follow thes
 1. Import the airML package (`from airML import airML`).
 2. Execute any KBox command with execute() function as follows.
    
-   (`airML.execute('KBox_Command')`)
+   ```
+   airML.execute('KBox_Command')
+   ```
 
 **Note: `execute()` method will return a string output which contains the result of the executed command.
+
+Other than the execute command you can use following methods directly,
+
+##### list(kns=False)
+    Description: List all available models(kns=False) or list all KNS services(kns=True).
+    Args:
+      kns:'boolean',defines whether to list only the KNS services or not
+    Returns:
+            Results from the KBox as JSON String
+
+
+##### install(modelID, format=None, version=None):
+    Description: Install the a model by given modelID
+     Args:
+         modelID: 'string', url of the model hosted in a public repository.
+         format:  'string', format of the model.
+         version: 'string' specific version to be installed of the the model.
+     Returns:
+         Results from the kbox as JSON String
+     Example:
+         install("http://nspm.org/art","NSPM","0")
+
+##### getInfo(model):
+    Description: Gives the information about a specific model.
+    Args:
+        model: url of the model.
+    Return:
+        Results from the kbox as JSON String
+
+##### locate(modelID, format, version=None):
+    Description: Returns the local address of the given model.
+    Args:
+        modelID: 'string',url of the model to be located.
+        format: 'string',format of the model.
+        version: 'string',version of the model.
+    Returns:
+        Results from the kbox as JSON String
+
+##### search(pattern, format, version=None):
+    Description: Search for all model-ids containing a given pattern.
+    Args:
+        pattern: 'string',pattern of the url of the models.
+        format: 'string',format of the model.
+        version: 'string',version of the model.
+    Returns:
+        Search Result from the KBox as a JSON String
     
-#### Source URLs
+### Source URLs
 * See the source for this project [here](https://github.com/AKSW/airML)
 * Find the KBox source code [here](https://github.com/AKSW/KBox)
