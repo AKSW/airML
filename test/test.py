@@ -60,6 +60,11 @@ class TestAirML(unittest.TestCase):
         output = airML.locate('http://nspm.org/art', format='nspm')
         self.assertTrue('"status_code": 200,' in output)
 
+    def test_search_function(self):
+        output = airML.search('art')
+        print(output)
+        self.assertTrue('"status_code": 200,' in output)
+
 
 if __name__ == '__main__':
     unittest.main()
