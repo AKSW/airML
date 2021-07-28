@@ -61,13 +61,12 @@ def execute(commands):
         return r.text
 
 
-
 def list(kns=False):
     """ List all available models(kns=False) or list all KNS services(kns=True).
         Args:
           kns:'boolean',defines whether to list only the KNS services or not
         Returns:
-            Results from the kbox as JSON String
+            Results from the KBox as JSON String
     """
     if kns:
         return execute('list kns' + JSON_OUTPUT)
@@ -105,7 +104,6 @@ def getInfo(model):
     return execute(command + JSON_OUTPUT)
 
 
-
 def locate(modelID, format, version=None):
     """ Returns the local address of the given model.
     Args:
@@ -119,6 +117,24 @@ def locate(modelID, format, version=None):
     if version is not None:
         command += SPACE + '-version' + version
     return execute(command + JSON_OUTPUT)
+
+
+def search(pattern, format=None, version=None):
+    """ Search for all model-ids containing a given pattern.
+    Args:
+        pattern: 'string',pattern of the url of the models.
+        format: 'string',format of the model.
+        version: 'string',version of the model.
+    Returns:
+        Search Result from the KBox as a JSON String
+    """
+
+    command = 'search' + SPACE + pattern
+    if format is not None:
+        command += SPACE + "-format" + SPACE + format
+        if version is not None:
+            command += SPACE + "-version" + SPACE + version
+    execute(command)
 
 
 def __is_push(command):
