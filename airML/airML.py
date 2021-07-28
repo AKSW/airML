@@ -134,7 +134,7 @@ def search(pattern, format=None, version=None):
         command += SPACE + "-format" + SPACE + format
         if version is not None:
             command += SPACE + "-version" + SPACE + version
-    execute(command)
+    return execute(command + JSON_OUTPUT)
 
 
 def __is_push(command):
