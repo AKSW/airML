@@ -35,7 +35,7 @@ class TestAirML(unittest.TestCase):
         self.assertEqual(output['status_code'], 200)
 
     def test_version(self):
-        output = airML.execute('version -o json')
+        output = airML.execute('-version -o json')
         output = json.loads(output)
         self.assertTrue(isinstance(output, dict))
         self.assertEqual(output['status_code'], 200)
