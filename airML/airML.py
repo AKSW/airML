@@ -17,48 +17,32 @@ COMMAND_LIST = [PUSH_COMMAND]
 @click.command(context_settings={"ignore_unknown_options": True})
 @click.argument('commands', nargs=-1)
 def execute_kbox_command(commands):
-    if not __is_push(commands):
-        args = SPACE
-        for item in commands:
-            args += item + SPACE
-        execute_commands = JAR_EXECUTE + args
-        try:
-            process = subprocess.Popen(execute_commands.split(), stdout=subprocess.PIPE)
-            output, err = process.communicate()
-            output = output.decode("utf-8")
-            click.echo(output)
-        except OSError as e:
-            click.echo(e)
-    else:
-        file_path = commands[1]
-        print(file_path)
-        url = 'https://store9.gofile.io/uploadFile'
-        files = {'file': open(file_path, 'rb')}
-        r = requests.post(url, files=files)
-        print(r.text)
+    args = SPACE
+    for item in commands:
+        args += item + SPACE
+    execute_commands = JAR_EXECUTE + args
+    try:
+        process = subprocess.Popen(execute_commands.split(), stdout=subprocess.PIPE)
+        output, err = process.communicate()
+        output = output.decode("utf-8")
+        click.echo(output)
+    except OSError as e:
+        click.echo(e)
 
 
 def execute(commands):
     commands = tuple(commands.split())
-    if not __is_push(commands):
-        args = SPACE
-        for item in commands:
-            args += item + SPACE
-        execute_commands = JAR_EXECUTE + args
-        try:
-            process = subprocess.Popen(execute_commands.split(), stdout=subprocess.PIPE)
-            output, err = process.communicate()
-            output = output.decode("utf-8")
-            return output
-        except OSError as e:
-            print(e)
-    else:
-        file_path = commands[1]
-        print(file_path)
-        url = 'https://store9.gofile.io/uploadFile'
-        files = {'file': open(file_path, 'rb')}
-        r = requests.post(url, files=files)
-        return r.text
+    args = SPACE
+    for item in commands:
+        args += item + SPACE
+    execute_commands = JAR_EXECUTE + args
+    try:
+        process = subprocess.Popen(execute_commands.split(), stdout=subprocess.PIPE)
+        output, err = process.communicate()
+        output = output.decode("utf-8")
+        return output
+    except OSError as e:
+        print(e)
 
 
 def list(kns=False):
@@ -136,8 +120,3 @@ def search(pattern, format=None, version=None):
             command += SPACE + "-version" + SPACE + version
     return execute(command + JSON_OUTPUT)
 
-
-def __is_push(command):
-    if command[0] == PUSH_COMMAND:
-        return True
-    return False
